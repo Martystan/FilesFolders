@@ -1,14 +1,12 @@
 package codeclan.files_and_folders.Files_and_folders.controllers;
 
 import codeclan.files_and_folders.Files_and_folders.models.Folder;
-import codeclan.files_and_folders.Files_and_folders.models.User;
+
 import codeclan.files_and_folders.Files_and_folders.repositories.FolderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,5 +26,11 @@ public class FolderController {
     public ResponseEntity getFolder(@PathVariable Long id) {
         return new ResponseEntity(folderRepository.findById(id), HttpStatus.OK);
 
+    }
+
+    @PostMapping(value = "/folders")
+    public ResponseEntity<Folder> postFolder(@RequestBody Folder folder) {
+        folderRepository.save(folder);
+        return new ResponseEntity<>(folder,HttpStatus.CREATED);
     }
 }
